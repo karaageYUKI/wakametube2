@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<>
+<head>
+    <meta charset='utf-8'>
+    <title>にゃんこ大戦争DB
+</title>
+    <script>function getlevel(){
+        if(document.getElementById('word').value == "黒キャス"){document.cookie = "yuki=True; path=/;";}else{
+        let req = new XMLHttpRequest();
+        req.addEventListener("load", function(){document.getElementById('info').textContent = this.responseText});
+        req.open("GET", "/answer?q="+document.getElementById('word').value);
+        req.send();}
+    }</script>
+</head>
+    。<br>
+　　<br>
+
+    <input id="word" type="text"></input><input type="button" onClick="getlevel()">.</input>
+    <div id="info">
+</body>
+</html>
