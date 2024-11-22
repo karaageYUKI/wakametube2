@@ -29,7 +29,18 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.mount("/word", StaticFiles(directory="./blog", html=True), name="static")
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
+from fastapi.templating import Jinja2Templates
+template = Jinja2Templates(directory='templates').TemplateResponse
+@app.get("/", response_class=HTMLResponse)
+def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
+    if check_cokie(yuki):
+        response.set_cookie("yuki","True",max_age=60 * 60 * 24 * 7)
+        return template("home.html",{"request": request})
+    print(check_cokie(yuki))
+    return redirect("/word")
 //レギュラー
 app.get('/w/:id', async (req, res) => {
   const videoId = req.params.id;
